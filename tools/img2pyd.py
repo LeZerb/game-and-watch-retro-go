@@ -280,7 +280,7 @@ fontdata = [
     _X___XX_, ______X_,
     __XX____, ____XX__,
     ____XXXX, XXXX____,
-    ________, ________,    
+    ________, ________,
     #  #06 ON
     0x06, 0x18, 0x10, 0x00,
     ________, ________,
@@ -294,7 +294,7 @@ fontdata = [
     _X______, _XX___X_,
     __XX____, ____XX__,
     ____XXXX, XXXX____,
-    ________, ________,   
+    ________, ________,
     #  #07 Full
     0x07, 0x18, 0x08, 0x00,
     XXXXXXXX, ________,
@@ -404,7 +404,7 @@ def Txt_Fromimg(font_name, priname, out_size:int, ckvale:int):
                         writestring(f," #" + "%d"%chrno + " width " + "%d"%chrwd+"\n")
                         writestring(f,"    # Option: fixed,fixed(outheight*2),width,xoffset \n")
                         writestring(f,"    0x%02x"%chrno + ", 0x%02x"%(out_size*2)+ ", 0x%02x"%chrwd + ", 0x%02x,\n"%(ssx))
-                    
+
                         #x * s_w + out_size * 2 + h_s - 1
                         #y * s_h + out_size * 2 + h_s
 
@@ -448,7 +448,7 @@ def main():
                 fontdef = json.load(load_f)
                 #print("Rom define file loaded")
                 load_f.close()
-            except: 
+            except:
                 print("Fonts define file load failed")
                 fontdef = {}
                 load_f.close()
@@ -460,6 +460,6 @@ def main():
     else:
         for key in fontdef:
             process_onefile(key, fontdef)
-        
+
 if __name__ == "__main__":
     main()

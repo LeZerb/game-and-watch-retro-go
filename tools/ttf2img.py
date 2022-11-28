@@ -74,7 +74,7 @@ def main():
                 fontdef = json.load(load_f)
                 #print("Rom define file loaded")
                 load_f.close()
-            except: 
+            except:
                 print("Fonts define file load failed")
                 fontdef = {}
                 load_f.close()
@@ -86,7 +86,7 @@ def main():
     else:
         for key in fontdef:
             process_onefile(key, fontdef)
-        
+
 
 if __name__ == "__main__":
     main()
