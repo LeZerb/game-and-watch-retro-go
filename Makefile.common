@@ -646,9 +646,13 @@ start_bank_2:
 		-c 'resume;exit'
 .PHONY: start_bank_2
 
-# Programs the internal flash using a new OpenOCD instance
-flash_intflash: $(BUILD_DIR)/$(TARGET)_intflash.bin
+# Programs the internal flash using a new OpenOCD instance without building
+flash_intflash_only:
 	$(OPENOCD) -f scripts/interface_$(ADAPTER).cfg -c "program $< $(INTFLASH_ADDRESS) verify reset exit"
+.PHONY: flash_intflash_only
+
+# Programs the internal flash using a new OpenOCD instance
+flash_intflash: $(BUILD_DIR)/$(TARGET)_intflash.bin flash_intflash_only
 .PHONY: flash_intflash
 
 # Flashes using an existing openocd instance
@@ -656,8 +660,11 @@ flash_intflash_nc: $(BUILD_DIR)/$(TARGET)_intflash.bin
 	echo "program $< $(INTFLASH_ADDRESS) verify reset" | nc -c localhost 4444
 .PHONY: flashx
 
-flash_extflash: $(BUILD_DIR)/$(TARGET)_extflash.bin
+flash_extflash_only:
 	$(FLASH_MULTI) $(BUILD_DIR)/$(TARGET)_extflash.bin $(EXTFLASH_OFFSET)
+.PHONY: flash_extflash_only
+
+flash_extflash: $(BUILD_DIR)/$(TARGET)_extflash.bin flash_extflash_only
 .PHONY: flash_extflash
 
 flash_test: flash_intflash
@@ -670,6 +677,13 @@ flash: CheckTools CheckDirtySubmodules
 	$(V)$(MAKE) flash_extflash
 	$(V)$(RESET_DBGMCU_CMD)
 .PHONY: flash
+
+# Programs both the external and internal flash without building.
+flash_only:
+	$(V)$(MAKE) flash_intflash_only
+	$(V)$(MAKE) flash_extflash_only
+	$(V)$(RESET_DBGMCU_CMD)
+.PHONY: flash_only
 
 monitor:
 	$(V)$(PYTHON3) tools/logpoll.py
@@ -806,6 +820,7 @@ help:
 	@echo "  dump_logs         - Dumps the callstack and logbuf. Starts openocd and gdb under the hood."
 	@echo "  dump_screenshot   - Downloads the stored screenshot."
 	@echo "  flash             - Programs the internal and external flash"
+	@echo "  flash_only        - Programs the internal and external flash without building"
 	@echo "  flash_all         - Alias for 'flash' (deprecated)"
 	@echo "  flash_extflash    - Only programs the external flash"
 	@echo "  flash_intflash    - Only programs the internal flash"
