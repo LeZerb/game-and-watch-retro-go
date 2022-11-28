@@ -1,0 +1,31 @@
+# Configure where data is stored in the external flash by
+# setting EXTFLASH_OFFSET. Useful if the first 1MB are to be preserved.
+EXTFLASH_OFFSET ?= 0
+
+# Configure Game & Watch target device mario|zelda
+GNW_TARGET ?= mario
+
+# Configure external flash size in MB (Megabytes)
+EXTFLASH_SIZE_MB ?= 4
+INTFLASH_BANK ?= 2
+BIG_BANK ?= 1
+
+# Set to 0 to remove state saving support (uses less space)
+STATE_SAVING ?= 1
+
+# Screenshot support allocates 150kB of external flash. Disabled by default.
+ENABLE_SCREENSHOT ?= 0
+
+# Set to 1 to add game genie support
+GAME_GENIE ?= 1
+
+#######################################
+# cover flow
+#######################################
+COVERFLOW ?= 1
+JPG_QUALITY ?= 50
+
+#######################################
+# Flashing
+#######################################
+ADAPTER ?= rpi
